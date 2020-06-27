@@ -1,3 +1,4 @@
+import 'package:covid_tracker/widgets/countries_stats.dart';
 import 'package:covid_tracker/widgets/search.dart';
 import 'package:covid_tracker/widgets/world_stats.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,7 @@ class _HomePageState extends State<HomePage> {
             SearchBox(),
             SizedBox(height: 20),
             _globalCount != null ? WorldStats(_globalCount) : Text(''),
+            _countryData != null ? CountryStats(_countryData) : Text(''),
           ],
         ),
       ),
