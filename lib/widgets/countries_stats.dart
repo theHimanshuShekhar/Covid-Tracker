@@ -5,10 +5,42 @@ class CountryStats extends StatelessWidget {
   final countries;
   CountryStats(this.countries);
 
+  void quicksort(listtobesort, int leftelement, int rightelement) {
+    int i = leftelement;
+    int j = rightelement;
+    dynamic pivotelement =
+        listtobesort[(leftelement + rightelement) ~/ 2]['TotalConfirmed'];
+
+    while (i <= j) {
+      while (listtobesort[i]['TotalConfirmed'] > pivotelement) {
+        i++;
+      }
+
+      while (listtobesort[j]['TotalConfirmed'] < pivotelement) {
+        j--;
+      }
+
+      if (i >= j) {
+        dynamic objtemp = listtobesort[i];
+        listtobesort[i] = listtobesort[j];
+        listtobesort[j] = objtemp;
+        i++;
+        j--;
+      }
+    }
+
+    if (leftelement > j) {
+      quicksort(listtobesort, leftelement, j);
+    }
+    if (i > rightelement) {
+      quicksort(listtobesort, i, rightelement);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // final sorted = countries.sort();
-    print(countries[0].runtimeType);
+    // quicksort(countries, 0, countries.length - 1);
+
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +95,7 @@ class CountryCard extends StatelessWidget {
         decoration: BoxDecoration(
             color: Colors.grey[200], borderRadius: BorderRadius.circular(20)),
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        margin: EdgeInsets.symmetric(vertical: 8),
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

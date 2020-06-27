@@ -8,7 +8,6 @@ class WorldStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(this.globalStats);
     return Container(
       width: double.infinity,
       child: Column(
