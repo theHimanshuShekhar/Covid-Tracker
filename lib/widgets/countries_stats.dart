@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CountryStats extends StatelessWidget {
-  final countries;
-  CountryStats(this.countries);
+  final inputCountries;
+  CountryStats(this.inputCountries);
 
   void quicksort(listtobesort, int leftelement, int rightelement) {
     int i = leftelement;
@@ -12,15 +12,15 @@ class CountryStats extends StatelessWidget {
         listtobesort[(leftelement + rightelement) ~/ 2]['TotalConfirmed'];
 
     while (i <= j) {
-      while (listtobesort[i]['TotalConfirmed'] > pivotelement) {
+      while (listtobesort[i]['TotalConfirmed'] < pivotelement) {
         i++;
       }
 
-      while (listtobesort[j]['TotalConfirmed'] < pivotelement) {
+      while (listtobesort[j]['TotalConfirmed'] > pivotelement) {
         j--;
       }
 
-      if (i >= j) {
+      if (i <= j) {
         dynamic objtemp = listtobesort[i];
         listtobesort[i] = listtobesort[j];
         listtobesort[j] = objtemp;
@@ -29,17 +29,19 @@ class CountryStats extends StatelessWidget {
       }
     }
 
-    if (leftelement > j) {
+    if (leftelement < j) {
       quicksort(listtobesort, leftelement, j);
     }
-    if (i > rightelement) {
+    if (i < rightelement) {
       quicksort(listtobesort, i, rightelement);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // quicksort(countries, 0, countries.length - 1);
+    quicksort(inputCountries, 0, inputCountries.length - 1);
+    var countries = new List.from(inputCountries.reversed);
+    // var countries = inputCountries;
 
     return Container(
       child: Column(
@@ -62,11 +64,11 @@ class CountryStats extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Container(
-              height: 250,
+              height: MediaQuery.of(context).size.height * 0.3,
               padding: EdgeInsets.zero,
               child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount: this.countries.length,
+                itemCount: countries.length,
                 itemBuilder: (BuildContext btx, int index) =>
                     CountryCard(country: countries[index]),
               ),
@@ -90,7 +92,6 @@ class CountryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(country);
     return Container(
         decoration: BoxDecoration(
             color: Colors.grey[200], borderRadius: BorderRadius.circular(20)),
