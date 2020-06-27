@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class WorldStats extends StatelessWidget {
   final globalStats;
@@ -30,9 +31,17 @@ class WorldStats extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               StatCard(
-                  count: this.globalStats['TotalConfirmed'],
-                  text: 'Infections'),
-              StatCard(count: this.globalStats['TotalDeaths'], text: 'Deaths'),
+                count: this.globalStats['TotalConfirmed'],
+                text: 'Infections',
+                newCount: this.globalStats['NewConfirmed'],
+                color: Colors.indigo,
+              ),
+              StatCard(
+                count: this.globalStats['TotalDeaths'],
+                text: 'Deaths',
+                newCount: this.globalStats['NewDeaths'],
+                color: Colors.red,
+              ),
             ],
           ),
           Row(
@@ -40,11 +49,16 @@ class WorldStats extends StatelessWidget {
             children: <Widget>[
               StatCard(
                   count: this.globalStats['TotalRecovered'],
+                  newCount: this.globalStats['NewRecovered'],
+                  color: Colors.green,
                   text: 'Recoveries'),
               StatCard(
+                  newCount: this.globalStats['NewConfirmed'] -
+                      this.globalStats['NewRecovered'],
                   count: this.globalStats['TotalConfirmed'] -
                       this.globalStats['TotalRecovered'],
-                  text: 'Critical'),
+                  color: Colors.amber,
+                  text: 'Active'),
             ],
           )
         ],
@@ -57,22 +71,59 @@ class StatCard extends StatelessWidget {
   final text;
   final count;
   final newCount;
+  final Color color;
+  final nFormat = NumberFormat();
 
-  StatCard({this.text, this.count, this.newCount});
+  StatCard({this.text, this.count, this.newCount, this.color});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.green,
+        color: color.withAlpha(50),
         borderRadius: BorderRadius.circular(20),
       ),
       margin: EdgeInsets.symmetric(vertical: 8),
       width: MediaQuery.of(context).size.width * 0.43,
       height: 150,
+      padding: EdgeInsets.all(20),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text('${this.text} ${this.count}'),
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: color.withAlpha(50),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              '+' + nFormat.format(newCount),
+              style: TextStyle(
+                color: Colors.blueGrey[900],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            nFormat.format(count),
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.bold,
+              fontSize: 21,
+            ),
+          ),
+          Text(
+            '${this.text}'.toUpperCase(),
+            style: TextStyle(
+              color: Colors.blueGrey[700],
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+          ),
         ],
       ),
     );
