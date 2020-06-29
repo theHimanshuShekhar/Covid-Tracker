@@ -1,45 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'dart:collection';
 
 class CountryStats extends StatelessWidget {
   final countries;
   CountryStats(this.countries);
 
-  void quicksort(listtobesort, int leftelement, int rightelement) {
-    int i = leftelement;
-    int j = rightelement;
-    dynamic pivotelement =
-        listtobesort[(leftelement + rightelement) ~/ 2]['TotalConfirmed'];
-
-    while (i <= j) {
-      while (listtobesort[i]['TotalConfirmed'] > pivotelement) {
-        i++;
+  List<dynamic> sortCountries(countryList) {
+    for (var i = 0; i < countryList.length; i++)
+      for (var j = i; j < countryList.length - i; j++) {
+        if (countryList[i]['TotalConfirmed'] <
+            countryList[j]['TotalConfirmed']) {
+          var temp = countryList[i];
+          countryList[i] = countryList[j];
+          countryList[j] = temp;
+        }
       }
-
-      while (listtobesort[j]['TotalConfirmed'] < pivotelement) {
-        j--;
-      }
-
-      if (i >= j) {
-        dynamic objtemp = listtobesort[i];
-        listtobesort[i] = listtobesort[j];
-        listtobesort[j] = objtemp;
-        i++;
-        j--;
-      }
-    }
-
-    if (leftelement > j) {
-      quicksort(listtobesort, leftelement, j);
-    }
-    if (i > rightelement) {
-      quicksort(listtobesort, i, rightelement);
-    }
+    return countryList;
   }
 
   @override
   Widget build(BuildContext context) {
-    // quicksort(countries, 0, countries.length - 1);
+    sortCountries(countries);
 
     return Container(
       child: Column(
@@ -66,7 +48,7 @@ class CountryStats extends StatelessWidget {
               padding: EdgeInsets.zero,
               child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount: this.countries.length,
+                itemCount: countries.length,
                 itemBuilder: (BuildContext btx, int index) =>
                     CountryCard(country: countries[index]),
               ),
@@ -90,14 +72,13 @@ class CountryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(country);
     return Container(
         decoration: BoxDecoration(
             color: Colors.grey[200], borderRadius: BorderRadius.circular(20)),
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
@@ -118,12 +99,14 @@ class CountryCard extends StatelessWidget {
                       numFormat.format(country['TotalConfirmed']),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        color: Colors.indigo,
                       ),
                     ),
                     Text(
                       'Infections',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        color: Colors.indigo,
                       ),
                     ),
                   ],
@@ -134,12 +117,14 @@ class CountryCard extends StatelessWidget {
                       numFormat.format(country['TotalDeaths']),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        color: Colors.red,
                       ),
                     ),
                     Text(
                       'Deaths',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        color: Colors.red,
                       ),
                     ),
                   ],
@@ -150,12 +135,14 @@ class CountryCard extends StatelessWidget {
                       numFormat.format(country['TotalRecovered']),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        color: Colors.green,
                       ),
                     ),
                     Text(
                       'Recoveries',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        color: Colors.green,
                       ),
                     ),
                   ],
@@ -167,12 +154,14 @@ class CountryCard extends StatelessWidget {
                           country['TotalConfirmed'] - country['TotalDeaths']),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        color: Colors.amber,
                       ),
                     ),
                     Text(
                       'Active',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        color: Colors.amber,
                       ),
                     ),
                   ],
