@@ -8,7 +8,6 @@ class WorldStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(this.globalStats);
     return Container(
       width: double.infinity,
       child: Column(
@@ -86,7 +85,7 @@ class StatCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 8),
       width: MediaQuery.of(context).size.width * 0.43,
       height: 150,
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +112,7 @@ class StatCard extends StatelessWidget {
             style: TextStyle(
               color: color,
               fontWeight: FontWeight.bold,
-              fontSize: 21,
+              fontSize: 24,
             ),
           ),
           Text(
