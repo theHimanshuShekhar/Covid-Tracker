@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'dart:collection';
 
 class CountryStats extends StatelessWidget {
   final countries;
@@ -44,7 +43,7 @@ class CountryStats extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Container(
-              height: 250,
+              height: MediaQuery.of(context).size.height * 0.3,
               padding: EdgeInsets.zero,
               child: ListView.builder(
                 padding: EdgeInsets.zero,

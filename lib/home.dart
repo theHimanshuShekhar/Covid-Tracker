@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: <Widget>[
               SearchBox(),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               _globalCount != null ? WorldStats(_globalCount) : Text(''),
               _countryData != null ? CountryStats(_countryData) : Text(''),
             ],
