@@ -3,8 +3,9 @@ import 'package:intl/intl.dart';
 
 class WorldStats extends StatelessWidget {
   final globalStats;
+  final header;
 
-  WorldStats(this.globalStats);
+  WorldStats(this.globalStats, this.header);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class WorldStats extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: Text(
-              'World Update',
+              header,
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 28,
@@ -55,7 +56,8 @@ class WorldStats extends StatelessWidget {
                   newCount: this.globalStats['NewConfirmed'] -
                       this.globalStats['NewRecovered'],
                   count: this.globalStats['TotalConfirmed'] -
-                      this.globalStats['TotalRecovered'],
+                      this.globalStats['TotalRecovered'] -
+                      this.globalStats['TotalDeaths'],
                   color: Colors.amber,
                   text: 'Active'),
             ],

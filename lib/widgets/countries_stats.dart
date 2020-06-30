@@ -1,9 +1,10 @@
+import 'package:covid_tracker/widgets/country_stats.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class CountryStats extends StatelessWidget {
+class CountriesStats extends StatelessWidget {
   final countries;
-  CountryStats(this.countries);
+  CountriesStats(this.countries);
 
   List<dynamic> sortCountries(countryList) {
     for (var i = 0; i < countryList.length; i++)
@@ -43,7 +44,7 @@ class CountryStats extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.3,
+              height: 300,
               padding: EdgeInsets.zero,
               child: ListView.builder(
                 padding: EdgeInsets.zero,
@@ -71,103 +72,108 @@ class CountryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            color: Colors.grey[200], borderRadius: BorderRadius.circular(20)),
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              country['Country'],
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+    return GestureDetector(
+      onTap: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => CountryStats(this.country))),
+      child: Container(
+          decoration: BoxDecoration(
+              color: Colors.grey[200], borderRadius: BorderRadius.circular(20)),
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                country['Country'],
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
-            ),
-            SizedBox(height: 8),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      numFormat.format(country['TotalConfirmed']),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.indigo,
+              SizedBox(height: 8),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        numFormat.format(country['TotalConfirmed']),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.indigo,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Infections',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.indigo,
+                      Text(
+                        'Infections',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.indigo,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      numFormat.format(country['TotalDeaths']),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        numFormat.format(country['TotalDeaths']),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Deaths',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
+                      Text(
+                        'Deaths',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      numFormat.format(country['TotalRecovered']),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green,
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        numFormat.format(country['TotalRecovered']),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Recoveries',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green,
+                      Text(
+                        'Recoveries',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      numFormat.format(
-                          country['TotalConfirmed'] - country['TotalDeaths']),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.amber,
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        numFormat.format(country['TotalConfirmed'] -
+                            country['TotalDeaths'] -
+                            country['TotalRecovered']),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.amber,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Active',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.amber,
+                      Text(
+                        'Active',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.amber,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ));
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          )),
+    );
   }
 }
