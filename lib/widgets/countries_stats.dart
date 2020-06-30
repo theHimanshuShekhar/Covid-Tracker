@@ -44,7 +44,7 @@ class CountriesStats extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Container(
-              height: 300,
+              height: MediaQuery.of(context).size.height * 0.32,
               padding: EdgeInsets.zero,
               child: ListView.builder(
                 padding: EdgeInsets.zero,

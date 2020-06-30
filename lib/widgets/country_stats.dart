@@ -27,16 +27,11 @@ class _CountryStatsState extends State<CountryStats> {
 
   void switchColor(index) {
     var color;
+    index++;
     if (index > 10) color = Colors.amber;
     if (index > 50) color = Colors.blue;
     if (index > 150) color = Colors.green;
     if (index <= 10) color = Colors.red;
-
-    print(index);
-    print(index > 10);
-    print(index > 50);
-    print(index > 150);
-    print(color);
 
     setState(() {
       this.color = color;
