@@ -40,19 +40,20 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-        margin: EdgeInsets.only(top: 20),
-        padding: EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              SearchBox(),
-              SizedBox(height: 10),
-              _globalCount != null
-                  ? WorldStats(_globalCount, 'World Update')
-                  : Text(''),
-              _countryData != null ? CountriesStats(_countryData) : Text(''),
-            ],
+      body: SafeArea(
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                SearchBox(),
+                SizedBox(height: 10),
+                _globalCount != null
+                    ? WorldStats(_globalCount, 'World Update')
+                    : Text(''),
+                _countryData != null ? CountriesStats(_countryData) : Text(''),
+              ],
+            ),
           ),
         ),
       ),

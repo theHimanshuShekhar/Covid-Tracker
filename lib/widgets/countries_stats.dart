@@ -50,7 +50,7 @@ class CountriesStats extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 itemCount: countries.length,
                 itemBuilder: (BuildContext btx, int index) =>
-                    CountryCard(country: countries[index]),
+                    CountryCard(country: countries[index], index: index),
               ),
             ),
           ),
@@ -64,22 +64,28 @@ class CountryCard extends StatelessWidget {
   CountryCard({
     Key key,
     @required this.country,
+    @required this.index,
   });
 
   final country;
+  final index;
 
   final numFormat = NumberFormat.compact(locale: 'en_US');
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => CountryStats(this.country))),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => CountryStats(this.country, this.index))),
       child: Container(
           decoration: BoxDecoration(
-              color: Colors.grey[200], borderRadius: BorderRadius.circular(20)),
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(20),
+          ),
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-          margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
+          margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
